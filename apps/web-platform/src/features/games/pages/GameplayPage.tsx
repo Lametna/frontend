@@ -14,6 +14,12 @@ const TriviaGameEngine = React.lazy(() => import('../trivia/TriviaGameEngine'));
 const BingoGameEngine = React.lazy(() => import('../bingo/BingoGameEngine'));
 const NumberGuessingEngine = React.lazy(() => import('../number-guessing/NumberGuessingEngine'));
 
+const BusCompleteEngine = React.lazy(() => import('../bus-complete/BusCompleteEngine'));
+const DrawGuessEngine = React.lazy(() => import('../draw-guess/DrawGuessEngine'));
+const CharadesEngine = React.lazy(() => import('../charades/CharadesEngine'));
+const PasswordEngine = React.lazy(() => import('../password/PasswordEngine'));
+const TabooEngine = React.lazy(() => import('../taboo/TabooEngine'));
+
 export function GameplayPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -23,13 +29,11 @@ export function GameplayPage() {
   const [showOverlay, setShowOverlay] = useState(false);
 
   useEffect(() => {
-    // When entering this page, if we aren't loading/playing/results, start loading.
     if (phase === 'idle' || phase === 'readyCheck' || phase === 'lobby') {
       setPhase('loading');
     }
   }, [phase, setPhase]);
 
-  // Handle Shift+Tab for overlay
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.shiftKey && e.key === 'Tab') {
@@ -62,7 +66,6 @@ export function GameplayPage() {
 
       {phase === 'playing' && (
         <div className="relative w-full h-full flex flex-col bg-background">
-          {/* Dynamic Game Router */}
           <div className="absolute inset-0 z-0">
              {game.title.includes('Spyfall') ? (
                <React.Suspense fallback={<LoadingScreen game={game} onComplete={() => {}} />}><SpyGameEngine matchId={id!} onFinish={handleFinishMatch} /></React.Suspense>
@@ -72,6 +75,16 @@ export function GameplayPage() {
                <React.Suspense fallback={<LoadingScreen game={game} onComplete={() => {}} />}><BingoGameEngine matchId={id!} onFinish={handleFinishMatch} /></React.Suspense>
              ) : game.title.includes('Riddle') || game.title.includes('Number') ? (
                <React.Suspense fallback={<LoadingScreen game={game} onComplete={() => {}} />}><NumberGuessingEngine matchId={id!} onFinish={handleFinishMatch} /></React.Suspense>
+             ) : game.title.includes('Word Chase') ? (
+               <React.Suspense fallback={<LoadingScreen game={game} onComplete={() => {}} />}><BusCompleteEngine matchId={id!} onFinish={handleFinishMatch} /></React.Suspense>
+             ) : game.title.includes('Draw & Guess') ? (
+               <React.Suspense fallback={<LoadingScreen game={game} onComplete={() => {}} />}><DrawGuessEngine matchId={id!} onFinish={handleFinishMatch} /></React.Suspense>
+             ) : game.title.includes('Charades') || game.title.includes('Dabke') ? (
+               <React.Suspense fallback={<LoadingScreen game={game} onComplete={() => {}} />}><CharadesEngine matchId={id!} onFinish={handleFinishMatch} /></React.Suspense>
+             ) : game.title.includes('Password') || game.title.includes('Secret') ? (
+               <React.Suspense fallback={<LoadingScreen game={game} onComplete={() => {}} />}><PasswordEngine matchId={id!} onFinish={handleFinishMatch} /></React.Suspense>
+             ) : game.title.includes('Taboo') || game.title.includes('Forbidden') ? (
+               <React.Suspense fallback={<LoadingScreen game={game} onComplete={() => {}} />}><TabooEngine matchId={id!} onFinish={handleFinishMatch} /></React.Suspense>
              ) : (
                <>
                  <video src={game.heroVideo} autoPlay muted loop className="w-full h-full object-cover opacity-80" />
