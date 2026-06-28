@@ -6,6 +6,7 @@ import { Avatar, AvatarImage } from '../../../components/ui/avatar';
 import { XPBar } from './XPBar';
 import { triggerVictoryConfetti } from '../../../components/ui/confetti';
 import { CURRENT_USER } from '../../../lib/mock-data';
+import { audioManager } from '../../../lib/audio';
 import { useNavigate } from 'react-router';
 
 interface ResultsScreenProps {
@@ -18,6 +19,7 @@ export function ResultsScreen({ onReturn }: ResultsScreenProps) {
   useEffect(() => {
     // Trigger confetti immediately on mount
     triggerVictoryConfetti();
+    audioManager.play('victory');
   }, []);
 
   return (

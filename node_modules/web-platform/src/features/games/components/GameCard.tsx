@@ -4,6 +4,9 @@ import { Badge } from '../../../components/ui/badge';
 import type { Game } from '../../../lib/mock-games';
 import { useNavigate } from 'react-router';
 
+import { audioManager } from '../../../lib/audio';
+import { PopScale } from '../../../components/ui/animations';
+
 interface GameCardProps {
   game: Game;
   index?: number;
@@ -13,13 +16,13 @@ export function GameCard({ game, index = 0 }: GameCardProps) {
   const navigate = useNavigate();
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, delay: index * 0.05 }}
-      whileHover={{ y: -8, scale: 1.02 }}
-      className="group relative flex flex-col rounded-2xl bg-card border border-border/50 overflow-hidden cursor-pointer shadow-sm hover:shadow-xl transition-all duration-300"
-      onClick={() => navigate(`/games/${game.id}`)}
+    <PopScale
+      delay={index * 0.05}
+      className="group relative flex flex-col rounded-2xl bg-card border border-border/50 overflow-hidden cursor-pointer shadow-sm hover:shadow-xl hover:box-glow transition-all duration-300"
+      onClick={() => {
+        audioManager.play('click');
+        navigate(`/games/${game.id}`);
+      }}
     >
       <div className="relative aspect-[3/4] w-full overflow-hidden bg-secondary">
         <img 
@@ -64,6 +67,6 @@ export function GameCard({ game, index = 0 }: GameCardProps) {
           </div>
         </div>
       </div>
-    </motion.div>
+    </PopScale>
   );
 }

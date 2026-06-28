@@ -118,4 +118,20 @@
   .glass-card {
     @apply bg-card/70 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.1)];
   }
+  .text-glow {
+    text-shadow: 0 0 10px var(--color-primary), 0 0 20px var(--color-primary);
+  }
+  .box-glow {
+    box-shadow: 0 0 15px var(--color-primary), inset 0 0 10px var(--color-primary);
+  }
+  .bg-animated-gradient {
+    background-size: 200% 200%;
+    animation: gradientShift 5s ease infinite;
+  }
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
