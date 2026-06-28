@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-bg-primary: #0B132B;
+  --color-accent-primary: #48E5C2;
+  --color-accent-secondary: #F4D06F;
+  --color-success: #3BCEAC;
+  --color-danger: #FF6B6B;
+}
+
+body {
+  background-color: var(--color-bg-primary);
+  color: #FFFFFF;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', system-ui, sans-serif;
+}
