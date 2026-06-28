@@ -4,6 +4,7 @@ import { Search, Filter, Sparkles, Flame, Clock } from 'lucide-react';
 import { Input } from '../../../components/ui/input';
 import { Button } from '../../../components/ui/button';
 import { Badge } from '../../../components/ui/badge';
+import { EmptyState } from '../../../components/ui/EmptyState';
 import { MOCK_GAMES } from '../../../lib/mock-data';
 import { GameCarousel } from '../components/GameCarousel';
 import { FeaturedGameCard } from '../components/FeaturedGameCard';
@@ -118,12 +119,13 @@ export function GamesPage() {
               ))}
             </div>
           ) : (
-            <div className="py-24 text-center border rounded-3xl bg-card/50 flex flex-col items-center">
-              <Search className="w-12 h-12 text-muted-foreground opacity-20 mb-4" />
-              <h3 className="text-xl font-bold mb-2">No games found</h3>
-              <p className="text-muted-foreground">Try adjusting your search or filters.</p>
-              <Button className="mt-6" onClick={() => {setSearchQuery(''); setActiveCategory(null)}}>View All Games</Button>
-            </div>
+            <EmptyState 
+              icon={Search}
+              title="No games found"
+              description="Try adjusting your search or filters to find what you're looking for."
+              actionLabel="View All Games"
+              onAction={() => {setSearchQuery(''); setActiveCategory(null)}}
+            />
           )}
         </div>
       )}
