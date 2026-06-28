@@ -9,6 +9,11 @@ import { useGameFlowStore } from '../../../store/gameFlow';
 import { LoadingScreen } from '../components/LoadingScreen';
 import { ResultsScreen } from '../components/ResultsScreen';
 
+const SpyGameEngine = React.lazy(() => import('../spy/SpyGameEngine'));
+const TriviaGameEngine = React.lazy(() => import('../trivia/TriviaGameEngine'));
+const BingoGameEngine = React.lazy(() => import('../bingo/BingoGameEngine'));
+const NumberGuessingEngine = React.lazy(() => import('../number-guessing/NumberGuessingEngine'));
+
 export function GameplayPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -56,27 +61,29 @@ export function GameplayPage() {
       </AnimatePresence>
 
       {phase === 'playing' && (
-        <div className="relative w-full h-full flex flex-col">
-          {/* Simulated Game Render View */}
+        <div className="relative w-full h-full flex flex-col bg-background">
+          {/* Dynamic Game Router */}
           <div className="absolute inset-0 z-0">
-             <video src={game.heroVideo} autoPlay muted loop className="w-full h-full object-cover opacity-80" />
-             <div className="absolute inset-0 bg-black/20" />
+             {game.title.includes('Spyfall') ? (
+               <React.Suspense fallback={<LoadingScreen game={game} onComplete={() => {}} />}><SpyGameEngine matchId={id!} onFinish={handleFinishMatch} /></React.Suspense>
+             ) : game.title.includes('Quiz Arena') ? (
+               <React.Suspense fallback={<LoadingScreen game={game} onComplete={() => {}} />}><TriviaGameEngine matchId={id!} onFinish={handleFinishMatch} /></React.Suspense>
+             ) : game.title.includes('Bingo Night') ? (
+               <React.Suspense fallback={<LoadingScreen game={game} onComplete={() => {}} />}><BingoGameEngine matchId={id!} onFinish={handleFinishMatch} /></React.Suspense>
+             ) : game.title.includes('Riddle') || game.title.includes('Number') ? (
+               <React.Suspense fallback={<LoadingScreen game={game} onComplete={() => {}} />}><NumberGuessingEngine matchId={id!} onFinish={handleFinishMatch} /></React.Suspense>
+             ) : (
+               <>
+                 <video src={game.heroVideo} autoPlay muted loop className="w-full h-full object-cover opacity-80" />
+                 <div className="absolute inset-0 bg-black/20" />
+               </>
+             )}
           </div>
           
           {/* Minimal Game HUD */}
           <div className="relative z-10 p-4 flex justify-between items-start pointer-events-none">
-            <div className="flex gap-2">
-              <div className="bg-background/80 backdrop-blur px-4 py-2 rounded-xl border flex items-center gap-2">
-                <span className="w-3 h-3 rounded-full bg-red-500 animate-pulse" />
-                <span className="font-bold text-sm">Round 3/5</span>
-              </div>
-            </div>
-            
-            <div className="bg-background/80 backdrop-blur px-4 py-2 rounded-xl border text-sm font-bold flex flex-col items-center">
-              <span className="text-muted-foreground text-xs uppercase">Time Remaining</span>
-              <span className="text-xl">04:12</span>
-            </div>
-            
+            <div className="flex gap-2"></div>
+            <div className="flex gap-2"></div>
             <Button variant="secondary" className="pointer-events-auto backdrop-blur bg-background/80" onClick={() => setShowOverlay(!showOverlay)}>
                Shift+Tab Menu
             </Button>
