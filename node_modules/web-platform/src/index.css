@@ -1,19 +1,121 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-:root {
-  --color-bg-primary: #0B132B;
-  --color-accent-primary: #48E5C2;
-  --color-accent-secondary: #F4D06F;
-  --color-success: #3BCEAC;
-  --color-danger: #FF6B6B;
+@theme {
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  
+  --font-sans: 'Inter', 'Outfit', 'Cairo', 'Tajawal', sans-serif;
+  --font-display: 'Outfit', 'Cairo', sans-serif;
 }
 
-body {
-  background-color: var(--color-bg-primary);
-  color: #FFFFFF;
-  margin: 0;
-  padding: 0;
-  font-family: 'Inter', system-ui, sans-serif;
+@layer base {
+  :root {
+    /* Sahlab Warmth & Light Mode */
+    --background: #FDFBF7;
+    --foreground: #1A1A1A;
+
+    --card: #FFFFFF;
+    --card-foreground: #1A1A1A;
+
+    --popover: #FFFFFF;
+    --popover-foreground: #1A1A1A;
+
+    /* Electric Nile */
+    --primary: #00D2FF;
+    --primary-foreground: #FFFFFF;
+
+    --secondary: #F1F5F9;
+    --secondary-foreground: #1A1A1A;
+
+    /* Lantern Orange */
+    --accent: #FF6B6B;
+    --accent-foreground: #FFFFFF;
+
+    --destructive: #E74C3C;
+    --destructive-foreground: #FFFFFF;
+
+    --border: #E2E8F0;
+    --input: #E2E8F0;
+    --ring: #00D2FF;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    /* City Night */
+    --background: #0B0F19;
+    --foreground: #F8FAFC;
+
+    --card: #151B2B;
+    --card-foreground: #F8FAFC;
+
+    --popover: #1E2538;
+    --popover-foreground: #F8FAFC;
+
+    /* Electric Nile */
+    --primary: #00D2FF;
+    --primary-foreground: #1A1A1A;
+
+    --secondary: #1E2538;
+    --secondary-foreground: #F8FAFC;
+
+    /* Lantern Orange */
+    --accent: #FF8E53;
+    --accent-foreground: #1A1A1A;
+
+    --destructive: #E74C3C;
+    --destructive-foreground: #F8FAFC;
+
+    --border: #1E2538;
+    --input: #1E2538;
+    --ring: #00D2FF;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased selection:bg-primary/30;
+  }
+  /* RTL Support overrides */
+  [dir="rtl"] body {
+    @apply font-sans; /* Ensures Cairo/Tajawal takes precedence */
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-white/10 dark:bg-black/20 backdrop-blur-md border border-white/20 dark:border-white/10 shadow-lg;
+  }
+  .glass-card {
+    @apply bg-card/70 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.1)];
+  }
 }
