@@ -20,6 +20,14 @@ const CharadesEngine = React.lazy(() => import('../charades/CharadesEngine'));
 const PasswordEngine = React.lazy(() => import('../password/PasswordEngine'));
 const TabooEngine = React.lazy(() => import('../taboo/TabooEngine'));
 
+const MafiaEngine = React.lazy(() => import('../social-deduction/MafiaEngine'));
+const WerewolfEngine = React.lazy(() => import('../social-deduction/WerewolfEngine'));
+const MemoryMatchEngine = React.lazy(() => import('../memory/MemoryMatchEngine'));
+const SpotDifferenceEngine = React.lazy(() => import('../spot-difference/SpotDifferenceEngine'));
+const WordChainEngine = React.lazy(() => import('../word-chain/WordChainEngine'));
+const HangmanEngine = React.lazy(() => import('../hangman/HangmanEngine'));
+const CategoriesEngine = React.lazy(() => import('../categories/CategoriesEngine'));
+
 export function GameplayPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -69,13 +77,13 @@ export function GameplayPage() {
           <div className="absolute inset-0 z-0">
              {game.title.includes('Spyfall') ? (
                <React.Suspense fallback={<LoadingScreen game={game} onComplete={() => {}} />}><SpyGameEngine matchId={id!} onFinish={handleFinishMatch} /></React.Suspense>
-             ) : game.title.includes('Quiz Arena') ? (
+             ) : game.title.includes('Quiz Arena') || game.title.includes('Trivia') ? (
                <React.Suspense fallback={<LoadingScreen game={game} onComplete={() => {}} />}><TriviaGameEngine matchId={id!} onFinish={handleFinishMatch} /></React.Suspense>
              ) : game.title.includes('Bingo Night') ? (
                <React.Suspense fallback={<LoadingScreen game={game} onComplete={() => {}} />}><BingoGameEngine matchId={id!} onFinish={handleFinishMatch} /></React.Suspense>
              ) : game.title.includes('Riddle') || game.title.includes('Number') ? (
                <React.Suspense fallback={<LoadingScreen game={game} onComplete={() => {}} />}><NumberGuessingEngine matchId={id!} onFinish={handleFinishMatch} /></React.Suspense>
-             ) : game.title.includes('Word Chase') ? (
+             ) : game.title.includes('Word Chase') || game.title.includes('Bus') ? (
                <React.Suspense fallback={<LoadingScreen game={game} onComplete={() => {}} />}><BusCompleteEngine matchId={id!} onFinish={handleFinishMatch} /></React.Suspense>
              ) : game.title.includes('Draw & Guess') ? (
                <React.Suspense fallback={<LoadingScreen game={game} onComplete={() => {}} />}><DrawGuessEngine matchId={id!} onFinish={handleFinishMatch} /></React.Suspense>
@@ -85,6 +93,20 @@ export function GameplayPage() {
                <React.Suspense fallback={<LoadingScreen game={game} onComplete={() => {}} />}><PasswordEngine matchId={id!} onFinish={handleFinishMatch} /></React.Suspense>
              ) : game.title.includes('Taboo') || game.title.includes('Forbidden') ? (
                <React.Suspense fallback={<LoadingScreen game={game} onComplete={() => {}} />}><TabooEngine matchId={id!} onFinish={handleFinishMatch} /></React.Suspense>
+             ) : game.title.includes('Mafia') ? (
+               <React.Suspense fallback={<LoadingScreen game={game} onComplete={() => {}} />}><MafiaEngine matchId={id!} onFinish={handleFinishMatch} /></React.Suspense>
+             ) : game.title.includes('Werewolf') || game.title.includes('Ludo') ? (
+               <React.Suspense fallback={<LoadingScreen game={game} onComplete={() => {}} />}><WerewolfEngine matchId={id!} onFinish={handleFinishMatch} /></React.Suspense>
+             ) : game.title.includes('Memory Match') ? (
+               <React.Suspense fallback={<LoadingScreen game={game} onComplete={() => {}} />}><MemoryMatchEngine matchId={id!} onFinish={handleFinishMatch} /></React.Suspense>
+             ) : game.title.includes('Spot') || game.title.includes('Difference') || game.title.includes('Tarneeb') ? (
+               <React.Suspense fallback={<LoadingScreen game={game} onComplete={() => {}} />}><SpotDifferenceEngine matchId={id!} onFinish={handleFinishMatch} /></React.Suspense>
+             ) : game.title.includes('Word Chain') ? (
+               <React.Suspense fallback={<LoadingScreen game={game} onComplete={() => {}} />}><WordChainEngine matchId={id!} onFinish={handleFinishMatch} /></React.Suspense>
+             ) : game.title.includes('Hangman') ? (
+               <React.Suspense fallback={<LoadingScreen game={game} onComplete={() => {}} />}><HangmanEngine matchId={id!} onFinish={handleFinishMatch} /></React.Suspense>
+             ) : game.title.includes('Categories') || game.title.includes('Bidaai') ? (
+               <React.Suspense fallback={<LoadingScreen game={game} onComplete={() => {}} />}><CategoriesEngine matchId={id!} onFinish={handleFinishMatch} /></React.Suspense>
              ) : (
                <>
                  <video src={game.heroVideo} autoPlay muted loop className="w-full h-full object-cover opacity-80" />
